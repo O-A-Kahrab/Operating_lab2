@@ -16,12 +16,12 @@ bad_names=("virus" "trojan" "malware" "worm" "ransomware")
 scan(){
 	shopt -s nullglob
 	for file in "$main_dir"/*;do
-		if [! -f "$file"|| ! -e "$file"];then
+		if [ ! -f "$file" ] || [ ! -e "$file" ];then
 			continue
 		fi
 		filename=$(basename "$file")
 		
-		if grep -qxf "$filename" "whitelist.txt";then
+		if grep -qxF "$filename" "whitelist.txt";then
 			continue
 		fi
 		
@@ -47,7 +47,7 @@ scan(){
 		fi
 		
 		#move file to quarantine and remove it from the main dir
-		if [ "$malicious -eq 1" ];then
+		if [ "$malicious" -eq 1 ];then
 			echo "file $filename is malicious and it is DELETED"
 			cp "$file" "$quarantine_dir"
 			rm -f "$file"
